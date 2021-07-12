@@ -25,7 +25,8 @@ export default class User {
     role: string;
 
     @Column({
-        type: 'timestamp'
+        type: 'timestamp',
+        default: 'now()'
     })
     created_at: Date;
 

@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToMany, OneToMany, OneToOne, PrimaryGeneratedColumn, Timestamp } from 'typeorm';
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToMany, OneToOne, PrimaryGeneratedColumn, Timestamp } from 'typeorm';
 import Address from './Address';
 import Documents from './Documents';
 import Specialties from './Specialties';
@@ -24,18 +24,31 @@ export default class Professional {
     @Column()
     registration_number: string;
 
-    @OneToOne(() => User)
+    @OneToOne(() => User, {
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+    })
+    @JoinColumn()
     user: User;
 
-    @OneToMany(() => Documents, document => document.professional)
+    @OneToMany(() => Documents, document => document.professional, {
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+    })
     documents: Document[];
 
-    @ManyToMany(() => Address)
-    @JoinColumn()
+    @ManyToMany(() => Address, {
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+    })
+    @JoinTable()
     address: Address[];
 
-    @ManyToMany(() => Specialties)
-    @JoinColumn()
+    @ManyToMany(() => Specialties, {
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+    })
+    @JoinTable()
     specialties: Specialties[];
 
 }

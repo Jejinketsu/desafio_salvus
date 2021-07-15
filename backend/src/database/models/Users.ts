@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, Timestamp, ManyToOne, JoinColumn, OneToOne } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToOne, JoinTable, JoinColumn } from "typeorm";
 import Role from '../../config/RoleEnum';
 import Address from "./Address";
 import Professional from "./Professional";
@@ -12,7 +12,9 @@ export default class User {
     @Column()
     name: string;
 
-    @Column()
+    @Column({
+        unique: true
+    })
     email: string;
 
     @Column()
@@ -30,11 +32,14 @@ export default class User {
     })
     created_at: Date;
 
-    @OneToOne(() => Professional)
+    @OneToOne(() => Professional, {
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+    })
     professional: Professional;
 
     @ManyToOne(() => Address, address => address.users)
-    @JoinColumn()
+    @JoinTable()
     address: Address;
 
 }

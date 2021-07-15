@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, OneToMany, JoinTable } from 'typeorm';
 import Professional from './Professional';
 import User from './Users';
 
@@ -21,6 +21,9 @@ export default class Address {
     city: string;
 
     @Column()
+    state: string;
+
+    @Column()
     country: string;
 
     @Column()
@@ -29,7 +32,10 @@ export default class Address {
     @OneToMany(() => User, user => user.address)
     users: User[];
 
-    @ManyToMany(() => Professional)
+    @ManyToMany(() => Professional, {
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+    })
     professionals: Professional[];
 
 }

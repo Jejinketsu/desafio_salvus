@@ -11,14 +11,14 @@ export class AddDocumentsForeingKeys1626112713953 implements MigrationInterface 
         await queryRunner.createForeignKey('documents', new TableForeignKey({
             columnNames: ['professionalId'],
             referencedColumnNames: ['id'],
-            referencedTableName: 'professionals',
+            referencedTableName: 'professional',
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE'
         }));
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropForeignKey('documents', 'professionalId');
+        //await queryRunner.dropForeignKey('documents', 'professionalId');
         await queryRunner.dropColumn('documents', 'professionalId');
     }
 

@@ -8,6 +8,13 @@ import UserController from '../src/controllers/UserController';
 const routes = Router();
 const upload = multer(uploadConfig);
 
+// User
 routes.post('/signup', UserController.create);
+routes.get('/login', UserController.login);
+routes.get('/get_users', AuthService.authorize, AuthService.authRole([Role.Super, Role.Admin]),
+    UserController.getUser);
+routes.patch('/update_user', AuthService.authorize, UserController.update);
+routes.delete('/delete_user', AuthService.authorize, UserController.delete);
+
 
 export default routes;

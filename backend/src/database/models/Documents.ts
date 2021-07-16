@@ -4,7 +4,7 @@ import Professional from "./Professional";
 @Entity()
 export default class Documents {
 
-    @PrimaryGeneratedColumn('uuid')
+    @PrimaryGeneratedColumn('increment')
     id: number;
 
     @Column()
@@ -14,7 +14,8 @@ export default class Documents {
     path_file: string;
 
     @Column({
-        type: 'timestamp'
+        type: 'timestamp',
+        default: 'now()'
     })
     created_at: Date;
 

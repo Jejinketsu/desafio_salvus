@@ -21,6 +21,7 @@ routes.delete('/delete_user', AuthService.authorize, UserController.delete);
 routes.post('/signup_pro', ProfessionalController.create);
 routes.get('/get_pro', AuthService.authorize, AuthService.authRole([Role.Super, Role.Admin]),
     ProfessionalController.getProfessional);
+routes.patch('/update_pro', AuthService.authorize, ProfessionalController.update);
 routes.delete('/delete_pro', AuthService.authorize, ProfessionalController.delete);
 
 export default routes;

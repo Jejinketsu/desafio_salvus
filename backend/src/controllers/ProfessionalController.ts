@@ -80,11 +80,34 @@ export default {
         try {
             logger.info(`update professional`);
 
+            const {
+                addresses,
+                specialties,
+                date_of_birth,
+                gender,
+                job,
+                registration_number,
+                user
+            } = request.body;
+
             
+            const professionalRepository = getRepository(Professional);
+            const professional = await professionalRepository.findOne({user: user});
+            
+            if(!professional) throw new EntityNotFoundException("professional", "user_id", user.id);
+            
+            professional.job = job;
+            professional.gender = gender;
+            professional.date_of_birth = date_of_birth;
+            professional.registration_number = registration_number;
+            professional.specialties = await SpecialtyFunctions.createSpecialty(specialties);
+            professional.address = await AddressFunctions.createAddress(addresses);
+
+            await professionalRepository.save(professional);
 
             logger.info(`update professional`);
 
-            return response.status(200).json();
+            return response.status(200).json(professional);
 
         } catch (error) {
             console.log(`update professional erro :>>`, error.message);
@@ -108,6 +131,7 @@ export default {
             console.log(`delete professional erro :>>`, error.message);
             next(error);
         }
+    },
     }
 
 }

@@ -1,12 +1,15 @@
 import { Request, Response, NextFunction, response, query } from 'express';
 import { getRepository } from 'typeorm';
 import logger from '../../logger';
+import S3 from '../services/S3_service';
 
+import Documents from '../database/models/Documents';
 import Professional from '../database/models/Professional';
 import AddressFunctions from './CommonFunctions/AddressFunctions';
 import SpecialtyFunctions from './CommonFunctions/SpecialtyFunctions';
 
 import UserFunctions from './CommonFunctions/UserFunctions';
+import EntityNotFoundException from '../exceptions/EntityNotFoundException';
 
 export default {
 
@@ -132,6 +135,86 @@ export default {
             next(error);
         }
     },
+
+    async addFile(request: Request, response: Response, next: NextFunction){
+        try {
+            logger.info(`add file`);
+
+            const { pro_id } = request.body;
+
+            const professionalRepository = getRepository(Professional);
+            const professional = await professionalRepository.findOne({id: pro_id});
+
+            if(!professional) throw new EntityNotFoundException("professional", "id", pro_id);
+
+            const documentsRepository = getRepository(Documents);
+            const document = documentsRepository.create({
+                name: request.file.filename,
+                path_file: '',
+                professional: professional
+            });
+            await documentsRepository.save(document);
+            
+            const avatar_info = {
+                entity: 'documents',
+                id: professional.id,
+                type: `${document.id}-${request.file.filename}`,
+                mime: request.file.mimetype
+            };
+
+            const filepath = await S3.uploadFile(request.file.path, avatar_info);
+            
+            document.path_file = filepath;
+
+            await documentsRepository.save(document);
+
+            logger.info(`file successful add`);
+
+            return response.sendStatus(200);
+
+        } catch (error) {
+            console.log(`add file erro :>>`, error.message);
+            next(error);
+        }
+    },
+
+    async removeFile(request: Request, response: Response, next: NextFunction){
+        try {
+            logger.info(`remove file`);
+
+            const { file_id, user } = request.body;
+
+            const documentsRepository = getRepository(Documents);
+            const document = await documentsRepository.findOne({id: file_id}, {
+                relations: ['professional']
+            });
+
+            const professionalRepository = getRepository(Professional);
+            const professional = await professionalRepository.findOne({user: user});
+
+            if(!professional) throw new EntityNotFoundException("professional", "user_id", user);
+
+            if(professional.id !== document.professional.id) throw {status: 401, message: 'not allowed file'};
+
+            const file_info = {
+                entity: "documents",
+                id: professional.id,
+                type: `${document.id}-${document.name}`,
+                mime: ''
+            }
+
+            S3.deleteFile(file_info);
+
+            await documentsRepository.delete({id: document.id});
+
+            logger.info(`file successful deleted`);
+
+            return response.sendStatus(200);
+
+        } catch (error) {
+            console.log(`delete file erro :>>`, error.message);
+            next(error);
+        }
     }
 
 }

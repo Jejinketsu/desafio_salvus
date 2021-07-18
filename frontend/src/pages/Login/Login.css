@@ -1,0 +1,135 @@
+
+:root {
+    --strong-green: #3C9A50;
+    --soft-green: #13D694;
+    --background-color: #F6F6F4;
+    --soft-grey: #5E5E5E;
+    --soft-red: #AE4040;
+}
+
+.container {
+    display: flex;
+    flex: 1;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: var(--background-color);
+    min-height: 100vh;
+}
+
+.logo_box img {
+    height: 60vh;
+}
+
+.form_box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form_box h1 {
+    font-size: 60px;
+    color: var(--strong-green);
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form p {
+    color: var(--soft-grey);
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateY(10%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.error_feedback {
+    background-color: var(--soft-red);
+    width: 100%;
+    min-height: 25px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 15px;
+    text-align: center;
+    animation: 0.3s ease-in 0s 1 slideInFromLeft;
+}
+
+.error_feedback p {
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+::placeholder {
+    font-size: 24px;
+    color: var(--soft-grey);
+    font-weight: bold;
+}
+
+.input_text {
+    background-color: rgba(0, 0, 0, 0);
+    border-color: var(--soft-grey);
+    border-radius: 15px;
+    border-width: 1px;
+    margin-bottom: 10px;
+    width: 100%;
+    min-height: 25px;
+    padding: 10px 10px 5px 10px;
+
+    font-size: 24px;
+    color: var(--soft-grey);
+    font-weight: bold;
+}
+
+.input_text:focus {
+    outline-style: none;
+}
+
+.submit_buttom {
+    background-color: var(--soft-green);
+    border-radius: 15px;
+    border-color: var(--soft-green);
+    border-width: 1px;
+    width: 107.7%;
+    min-height: 25px;
+    padding: 10px;
+    margin-bottom: 30px;
+    
+    color: #FFF;
+    font-size: 24px;
+    font-weight: bold;
+    transition: 0.3s ease;
+}
+
+.submit_buttom:hover {
+    cursor: pointer;
+    width: 110%;
+}
+
+.register_buttom {
+    width: 100%;
+    min-height: 25px;
+    padding: 10px;
+    border: 1px solid var(--soft-green);
+    border-radius: 15px;
+
+    text-align: center;
+    color: var(--soft-green);
+    font-weight: bold;
+    font-size: 24px;
+    text-decoration: none;
+    transition: 0.3s ease;
+}
+
+.register_buttom:hover {
+    width: 105%;
+}

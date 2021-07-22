@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import api from '../../services/api';
+import { Link, useHistory, Redirect } from 'react-router-dom';
+import { authContext } from "../../services/authHook";
 
 import "./Login.css";
 
 import salvus_logo from "../../assets/salvus-logo.png";
 
 function Login(props) {
-
+    const { login, signin } = React.useContext(authContext);
     const history = useHistory();
 
     const [email, setEmail] = useState('');
@@ -18,23 +18,17 @@ function Login(props) {
         event.preventDefault();
         setFailed(false);
 
-        api.get("/login", {
-            auth: {
-                username: email,
-                password: password,
-            }
-        }).then((response) => {
-            localStorage.setItem("token", response.data.token);
-            history.push("/profile", {})
+        signin(email, password).then(() => {
+            history.push("/profile");
         }).catch((error) => {
             setFailed(true);
         })
     }
 
-    return(
+    return login === true ? (<Redirect to={{pathname: "/profile"}} />) : (
         <div className="container">
             <div className="logo_box">
-                <img src={salvus_logo} />
+                <img src={salvus_logo} alt="logo salvus"/>
             </div>
             <section className="form_box">
                 <h1>Log In</h1>
@@ -66,7 +60,7 @@ function Login(props) {
                     <button type="submit" className="submit_buttom">Login</button>
                     
                     <p className="hint"><strong>Não tem conta ainda? Crie uma nova!</strong></p>
-                    <Link className="register_buttom" to="/register">Criar Conta</Link>
+                    <Link className="soft_buttom" to="/register">Criar Conta</Link>
                 </form>
             </section>
         </div>

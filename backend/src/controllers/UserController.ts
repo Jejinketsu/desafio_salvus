@@ -47,6 +47,9 @@ export default {
             const usersRepository = getRepository(Users);
             const user = await usersRepository.findOne({
                 email: username
+            }, 
+            {
+                relations: ['address']
             });
             
             if(!user) throw new EntityNotFoundException("User", "username", username);
@@ -79,7 +82,7 @@ export default {
             const users = await usersRepository.find({
                 where: request.query,
                 select: ['id', 'name', 'email', 'role', 'created_at'],
-                relations: ['professional']
+                relations: ['address']
             });
 
             logger.info(`users successful obtained`);
@@ -110,13 +113,14 @@ export default {
 
             user.name = name;
             user.email = email;
-            user.password = password;
+            if(password)
+                user.password = bcrypt.hashSync(password, 12);
 
             const addressRepository = getRepository(Address);
             const have_address = await addressRepository.findOne(address);
 
             if(!have_address){
-                const new_address = await AddressFunctions.createAddress(address);
+                const new_address = await AddressFunctions.createAddress([address]);
                 user.address = new_address[0];
             }
 

@@ -1,0 +1,132 @@
+
+:root {
+    --strong-green: #3C9A50;
+    --soft-green: #13D694;
+    --background-color: #F6F6F4;
+    --soft-grey: #8B8B8B;
+    --soft-red: #AE4040;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    width: 99%;
+    border-bottom: 3px solid var(--strong-green);
+    padding: 5px;
+    min-width: 30px;
+}
+
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background-color: var(--background-color);
+}
+
+.update_form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 30%;
+    align-self: center;
+}
+
+.top_panel {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h1 {
+    font-size: 60px;
+    color: var(--strong-green);
+    margin: 5px;
+}
+
+.user-resume {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.red_buttom {
+    color: var(--soft-red);
+    background-color: rgba(0, 0, 0, 0);
+    border: 2px solid var(--soft-red);
+    border-radius: 15px;
+    width: 25%;
+    min-height: 30px;
+    max-height: 60px;
+    min-width: 30px;
+    max-width: 60px;
+    transition: 0.2s ease;
+}
+
+.red_buttom:hover {
+    cursor: pointer;
+}
+
+.red_buttom:active {
+    color: white;
+    background-color: var(--soft-red);
+}
+
+.user-resume img {
+    height: 100%;
+    border-radius: 50%;
+}
+
+.user_name {
+    font-size: 30px;
+    font-weight: bold;
+    color: var(--soft-green);
+    margin: 6px;
+}
+
+.user_email {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--soft-green);
+    margin: 6px;
+}
+
+label {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--soft-grey);
+    align-self: flex-start;
+    margin-top: 10px;
+    margin-bottom: 3px;
+}
+
+.update_form .input_text {
+    width: 95%;
+}
+
+.update_form .submit_buttom {
+    width: 49%;
+    height: 100%;
+}
+
+.update_form .soft_buttom {
+    width: 49%;
+    height: 100%;
+}
+
+.form div {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+#street {
+    width: 70%;
+    align-self: flex-start;
+    margin-left: 0px;
+}
+
+#number {
+    width: 15%;
+    align-self: flex-end;
+}

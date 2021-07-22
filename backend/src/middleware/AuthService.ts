@@ -46,5 +46,15 @@ export default {
 
             next();
         }
+    },
+
+    async authConfirmed(request: Request, response: Response, next: NextFunction){
+        try {
+            if(request.body.user) return response.status(200).json({auth: request.body.user});
+            else return response.status(200).json({auth: false});
+        } catch (error) {
+            console.log("auth confirmed error >>: ", error.message);
+            next(error);
+        }
     }
 }

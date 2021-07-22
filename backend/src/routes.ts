@@ -9,6 +9,9 @@ import ProfessionalController from './controllers/ProfessionalController';
 const routes = Router();
 const upload = multer(uploadConfig);
 
+// Auth
+routes.get('/check_auth', AuthService.authorize, AuthService.authConfirmed);
+
 // User
 routes.post('/signup', UserController.create);
 routes.get('/login', UserController.login);

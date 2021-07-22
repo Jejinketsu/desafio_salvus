@@ -1,0 +1,67 @@
+:root {
+    --strong-green: #3C9A50;
+    --soft-green: #13D694;
+    --background-color: #F6F6F4;
+    --soft-grey: #8B8B8B;
+    --soft-red: #AE4040;
+}
+
+form h2 {
+    color: var(--strong-green);
+    border-bottom: 1px solid var(--soft-green);
+}
+
+.register-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 100vh;
+    background-color: var(--background-color);
+}
+
+.form_section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.checkbox_label {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.input_checkbox input {
+    display: none;
+}
+
+.input_checkbox {
+    display: inline-block;
+    background-color: rgba(0, 0, 0, 0);
+    border: 2px solid var(--soft-green);
+    border-radius: 5px;
+    width: 25px;
+    height: 25px;
+    margin: 0px 5px;
+
+    text-align: center;
+    vertical-align: center;
+    
+    cursor: pointer;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.yes_icon {
+    color: var(--soft-green);
+    animation: 0.2s ease-in 0s 1 fadeIn;
+}
